@@ -1,8 +1,8 @@
-#include <Ultrasonic.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>  // Include the ArduinoJson library
 #include <WiFiClientSecure.h> // Include the WiFiClientSecure library
+#include <Ultrasonic.h>
 
 const int trigPin = D4;   
 const int echoPin = D5; 
@@ -10,10 +10,8 @@ const int echoPin = D5;
 #define MIN_DISTANCE 200 // Minimum distance in cm (1 meter)
 #define TIME_THRESHOLD 10000 // Time threshold in milliseconds (10 seconds)
 
-#ifndef STASSID
-#define STASSID "SSID"
-#define STAPSK "PASS"
-#endif
+#define STASSID "Redmi Note 8"
+#define STAPSK "edf18440121a"
 
 const char* ssid = STASSID;
 const char* password = STAPSK;

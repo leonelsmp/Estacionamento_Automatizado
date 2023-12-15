@@ -11,12 +11,12 @@ from PIL import Image
 class Dados():
 
     def __init__(self):
-        response = get("https://southcarpark-api.onrender.com/Historico")
+        response = get("https://southcarpark-api.onrender.com/Historico") # get("http://127.0.0.1:5000/Historico") #
         historico = pd.DataFrame( response.json())
         historico["DataFim"] = pd.to_datetime(historico["DataFim"])
         historico["DataInicio"] = pd.to_datetime(historico["DataInicio"])
         historico["Minutos"] = (historico["DataFim"] - historico["DataInicio"])/pd.Timedelta(15 ,"m")
-        response = get("https://southcarpark-api.onrender.com/Vagas")
+        response = get("https://southcarpark-api.onrender.com/Vagas") #get("http://127.0.0.1:5000/Vagas") #
         vagas = pd.DataFrame( response.json())
 
         self.vagas = vagas
