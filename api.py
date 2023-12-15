@@ -1,11 +1,26 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow 
+from flask_socketio import SocketIO, emit, Namespace
 import os
 from datetime import datetime ,timezone, timedelta
+from flask_cors import CORS
+#https://southcarpark.netlify.app/
 
 # Init app
+# Create a custom namespace
+class MyNamespace(Namespace):
+    def on_connect(self):
+        print('Client connected')
+
+    def on_disconnect(self):
+        print('Client disconnected')
+
 app = Flask(__name__)
+socketIO = SocketIO(app, cors_allowed_origins="*", namespace='/mynamespace')
+socketIO.on_namespace(MyNamespace('/mynamespace'))
+CORS(app)
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
@@ -79,6 +94,10 @@ def entrou_carro():
         db.session.add(carro)
         db.session.add(vaga)
         db.session.commit()
+        try:
+          emit('message', json.loads(Vaga_schema.jsonify(vaga).data), namespace='/mynamespace', broadcast=True)
+        except Exception as e:
+          pass
         return Historico_schema.jsonify(carro), 200
 
 # Carro saiu da vaga
@@ -96,6 +115,10 @@ def saiu_carro():
         db.session.add(carro)
         db.session.add(vaga)
         db.session.commit()
+        try:
+          emit('message', json.loads(Vaga_schema.jsonify(vaga).data),namespace='/mynamespace', broadcast=True)
+        except Exception as e:
+          pass
         return Historico_schema.jsonify(carro)
     else:
         return "Vaga livre", 200
@@ -122,4 +145,5 @@ def get_vaga(Vagaid):
 
 # Run Server
 if __name__ == '__main__':
-  app.run(debug=True)
+  #app.run(debug=True)
+  socketIO.run(app, debug=True)

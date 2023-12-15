@@ -11,12 +11,12 @@ from PIL import Image
 class Dados():
 
     def __init__(self):
-        response = get("http://leonelsmp.pythonanywhere.com/Historico")
+        response = get("https://southcarpark-api.onrender.com/Historico")
         historico = pd.DataFrame( response.json())
         historico["DataFim"] = pd.to_datetime(historico["DataFim"])
         historico["DataInicio"] = pd.to_datetime(historico["DataInicio"])
         historico["Minutos"] = (historico["DataFim"] - historico["DataInicio"])/pd.Timedelta(15 ,"m")
-        response = get("http://leonelsmp.pythonanywhere.com/Vagas")
+        response = get("https://southcarpark-api.onrender.com/Vagas")
         vagas = pd.DataFrame( response.json())
 
         self.vagas = vagas
@@ -25,13 +25,13 @@ class Dados():
         self.receita = round(self.Calcular_receita_diaria(),2)
 
     def Atualizar(self):
-        response = get("http://leonelsmp.pythonanywhere.com/Historico")
+        response = get("https://southcarpark-api.onrender.com/Historico")
         historico = pd.DataFrame( response.json())
         historico["DataFim"] = pd.to_datetime(historico["DataFim"])
         historico["DataInicio"] = pd.to_datetime(historico["DataInicio"])
         historico["Minutos"] = (historico["DataFim"] - historico["DataInicio"])/pd.Timedelta(15 ,"m")
         self.historico = historico
-        response = get("http://leonelsmp.pythonanywhere.com/Vagas")
+        response = get("https://southcarpark-api.onrender.com/Vagas")
         self.vagas = pd.DataFrame( response.json())
         self.receita = round(self.Calcular_receita_diaria(),2)
 

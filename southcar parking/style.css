@@ -1,0 +1,126 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+
+.parking-header h1 {
+  color: #333;
+}
+
+.parking-header h2 {
+  color: #666;
+}
+
+#parking-lot {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.spot {
+  width: 200px;
+  height: 100px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #D9D9D9;
+}
+
+.available {
+  background-color: #0099ff;
+}
+
+.occupied {
+  background-color: #cccccc;
+}
+
+.parking-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.status-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.available-indicator {
+  background-color: #0099ff;
+}
+
+.occupied-indicator {
+  background-color: #cccccc;
+}
+
+.entrance-div {
+  border: 2px dashed #b6bbc4;
+  display: flex;
+  width: 100px;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 40px;
+}
+.img {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 20px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+.img-2 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.img-3 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.img-4 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.img-5 {
+  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+
+#main-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+}
+#entrance-title {
+  color: #A9A9A9;
+}
