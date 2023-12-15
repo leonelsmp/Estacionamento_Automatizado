@@ -61,7 +61,7 @@ class Dados():
     def Calcular_receita_semanal(self):
         today = date.today()
         week_prior = pd.to_datetime( today - timedelta(weeks=1) )
-        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior) & (self.historico["DataInicio"] < pd.to_datetime( today))]
+        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior)]
         receita = filtered_historico["Minutos"].sum()*self.tarifa
         return receita
     
@@ -118,7 +118,7 @@ class Dados():
     def Grafico_semanal_fluxo(self):
         today = date.today()
         week_prior = pd.to_datetime( today - timedelta(weeks=1) )
-        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior) & (self.historico["DataInicio"] < pd.to_datetime( today))]
+        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior)]
         fig2, ax2 = plt.subplots()
         ax2.set_title('Quantidade de caros semanal')
         ax2.hist(filtered_historico["DataInicio"].dt.strftime("%d/%m/%Y"), bins=7, color=Cor_texto)
@@ -139,7 +139,7 @@ class Dados():
     def Grafico_semnal_receita(self):
         today = date.today()
         week_prior = pd.to_datetime( today - timedelta(weeks=1) )
-        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior) & (self.historico["DataInicio"] < pd.to_datetime( today))]
+        filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior)]
         fig4, ax4 = plt.subplots()
         ax4.set_title('Receita semanal')
         ax4.bar(filtered_historico["DataInicio"].dt.strftime("%d/%m/%Y"), filtered_historico["Minutos"]*self.tarifa, color=Cor_texto)
