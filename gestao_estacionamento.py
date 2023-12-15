@@ -49,7 +49,7 @@ class Dados():
     def Get_tempo_medio_diario(self):
         filtrar = self.historico[self.historico["DataInicio"] >= pd.to_datetime(date.today()) ]
         minutos = (filtrar["DataFim"] - filtrar["DataInicio"])/pd.Timedelta(1 ,"m")
-        return "Tempo medio diario (minutos): "+ str(round(minutos.mean(), 3))
+        return "Tempo medio diario (minutos): "+ str(round(minutos.mean(), 2))
 
     def PUT_tarinfa(self):
         print(self.tarifa)
@@ -124,25 +124,33 @@ class Dados():
         ax2.hist(filtered_historico["DataInicio"].dt.strftime("%d/%m/%Y"), bins=7, color=Cor_texto)
         ax2.set_xlabel('Dias')
         ax2.set_ylabel('Qunatidade')
+        ax2.yaxis.set_major_locator(MaxNLocator(integer=True))
         return fig2
     
     def Grafico_diario_receita(self):
         filtrar = self.historico[self.historico["DataInicio"] >= pd.to_datetime(date.today()) ]
+
+        grupo = filtrar["Minutos"].groupby(filtrar["DataInicio"].dt.strftime("%d/%m/%Y %H:00")).sum()
+        grupo = grupo.reset_index().rename(columns={"index":"date"})
+
         fig3, ax3 = plt.subplots()
         ax3.set_title('Receira diaria')
-        ax3.bar(filtrar["DataInicio"].dt.strftime("%d/%m/%Y %H:00"), filtrar["Minutos"]*self.tarifa, color=Cor_texto)
+        ax3.bar(grupo["DataInicio"], grupo["Minutos"]*self.tarifa, color=Cor_texto)
         ax3.set_xlabel('Horas')
         ax3.set_ylabel('Receita (R$)')
-        ax3.yaxis.set_major_locator(MaxNLocator(integer=True))
         return fig3
     
     def Grafico_semnal_receita(self):
         today = date.today()
         week_prior = pd.to_datetime( today - timedelta(weeks=1) )
         filtered_historico = self.historico[(self.historico["DataInicio"] >= week_prior)]
+
+        grupo = filtered_historico["Minutos"].groupby(filtered_historico["DataInicio"].dt.strftime("%d/%m/%Y")).sum()
+        grupo = grupo.reset_index().rename(columns={"index":"date"})
+
         fig4, ax4 = plt.subplots()
         ax4.set_title('Receita semanal')
-        ax4.bar(filtered_historico["DataInicio"].dt.strftime("%d/%m/%Y"), filtered_historico["Minutos"]*self.tarifa, color=Cor_texto)
+        ax4.bar(grupo["DataInicio"], grupo["Minutos"]*self.tarifa, color=Cor_texto)
         ax4.set_xlabel('Dias')
         ax4.set_ylabel('Receita (R$)')
         return fig4
